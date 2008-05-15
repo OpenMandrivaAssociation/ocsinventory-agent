@@ -1,7 +1,7 @@
 Summary:	Unified client for OCS-Inventory
 Name:		ocsinventory-agent
 Version:	0.0.9.2
-Release:	%mkrel 0.1
+Release:	%mkrel 1
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://www.ocsinventory-ng.org/
@@ -12,17 +12,17 @@ Source3:	ocsinventory-agent.sysconfig
 Source4:	ocsinventory-agent.cfg
 Patch0:		Ocsinventory-Agent-unbundle.diff
 Patch1:		ocsinventory-agent-options.patch
-BuildRequires:	perl-Compress-Zlib >= 2.008
-BuildRequires:	perl(Digest::MD5) >= 2.36
-BuildRequires:	perl(File::Temp) >= 0.20
-BuildRequires:	perl(LWP) >= 5.808
-BuildRequires:	perl(Net::IP) >= 1.25
-BuildRequires:	perl-URI >= 1.35
-BuildRequires:	perl-XML-NamespaceSupport >= 1.09
-BuildRequires:	perl(XML::SAX) >= 0.16
+BuildRequires:	perl-Compress-Zlib
+BuildRequires:	perl(Digest::MD5)
+BuildRequires:	perl(File::Temp)
+BuildRequires:	perl(LWP)
+BuildRequires:	perl(Net::IP)
+BuildRequires:	perl-URI
+BuildRequires:	perl-XML-NamespaceSupport
+BuildRequires:	perl(XML::SAX)
 BuildRequires:	perl-XML-SAX-Expat
 BuildRequires:	perl(XML::Simple)
-BuildRequires:	perl-XML-Simple >= 2.18
+BuildRequires:	perl-XML-Simple
 Requires:	net-tools
 Requires:	pciutils
 Requires:	nmap
@@ -109,4 +109,3 @@ rm -rf %{buildroot}
 %files -n perl-Ocsinventory
 %defattr(-,root, root)
 %{perl_vendorlib}/Ocsinventory
-
