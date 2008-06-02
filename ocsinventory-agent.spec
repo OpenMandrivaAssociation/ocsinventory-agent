@@ -73,7 +73,7 @@ install -d %{buildroot}%{_sysconfdir}/logrotate.d
 install -d %{buildroot}%{_sysconfdir}/sysconfig
 install -d %{buildroot}%{_sysconfdir}/cron.hourly
 install -d %{buildroot}%{_sysconfdir}/ocsinventory
-install -d %{buildroot}%{_localstatedir}/%{name}
+install -d %{buildroot}%{_localstatedir}/lib/%{name}
 install -d %{buildroot}/var/log/%{name}
 
 rm -f run-postinst
@@ -103,7 +103,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/ocsinventory/%{name}.cfg
 %{_sbindir}/%{name}
 %dir /var/log/%{name}
-%dir %{_localstatedir}/%{name}
+%dir %{_localstatedir}/lib/%{name}
 %{_mandir}/man1/%{name}.*
 
 %files -n perl-Ocsinventory
