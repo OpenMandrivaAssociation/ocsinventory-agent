@@ -1,7 +1,7 @@
 Summary:	Unified client for OCS-Inventory
 Name:		ocsinventory-agent
 Version:	0.0.9.2
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://www.ocsinventory-ng.org/
