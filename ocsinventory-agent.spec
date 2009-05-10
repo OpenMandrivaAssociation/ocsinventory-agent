@@ -1,7 +1,7 @@
 Summary:	Unified client for OCS-Inventory
 Name:		ocsinventory-agent
-Version:	0.0.9.2
-Release:	%mkrel 2
+Version:	1.0.1
+Release:	%mkrel 1
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://www.ocsinventory-ng.org/
@@ -10,25 +10,22 @@ Source1:	ocsinventory-agent.logrotate
 Source2:	ocsinventory-agent.cron
 Source3:	ocsinventory-agent.sysconfig
 Source4:	ocsinventory-agent.cfg
-Patch0:		Ocsinventory-Agent-unbundle.diff
-Patch1:		ocsinventory-agent-options.patch
-BuildRequires:	perl-Compress-Zlib
+BuildRequires:	perl(Compress::Zlib)
 BuildRequires:	perl(Digest::MD5)
 BuildRequires:	perl(File::Temp)
 BuildRequires:	perl(LWP)
 BuildRequires:	perl(Net::IP)
-BuildRequires:	perl-URI
-BuildRequires:	perl-XML-NamespaceSupport
+BuildRequires:	perl(URI)
+BuildRequires:	perl(XML::NamespaceSupport)
 BuildRequires:	perl(XML::SAX)
-BuildRequires:	perl-XML-SAX-Expat
+BuildRequires:	perl(XML::SAX::Expat)
 BuildRequires:	perl(XML::Simple)
-BuildRequires:	perl-XML-Simple
 Requires:	net-tools
 Requires:	pciutils
 Requires:	nmap
 Requires:	monitor-edid
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 ocsinventory-agent creates inventory and sent or write them. This agent is the
@@ -47,10 +44,7 @@ It also replaces the Solaris/AIX/BSD unofficial agents.
 This package contains the perl module parts of the ocsinventory-agent.
 
 %prep
-
 %setup -q -n Ocsinventory-Agent-%{version}
-%patch0 -p1
-%patch1 -p0
 
 cp %{SOURCE1} ocsinventory-agent.logrotate
 cp %{SOURCE2} ocsinventory-agent.cron
