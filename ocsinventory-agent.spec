@@ -1,85 +1,61 @@
-Summary:	Unified client for OCS-Inventory
 Name:		ocsinventory-agent
-Version:	1.0.1
+Version:	1.02
 Release:	%mkrel 1
+Summary:	Unified client for OCS-Inventory
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://www.ocsinventory-ng.org/
-Source0:	http://search.cpan.org/CPAN/authors/id/G/GO/GONERI/Ocsinventory-Agent-%{version}.tar.gz
-Source1:	ocsinventory-agent.logrotate
-Source2:	ocsinventory-agent.cron
-Source3:	ocsinventory-agent.sysconfig
-Source4:	ocsinventory-agent.cfg
-BuildRequires:	perl(Compress::Zlib)
-BuildRequires:	perl(Digest::MD5)
-BuildRequires:	perl(File::Temp)
-BuildRequires:	perl(LWP)
-BuildRequires:	perl(Net::IP)
-BuildRequires:	perl(URI)
-BuildRequires:	perl(XML::NamespaceSupport)
-BuildRequires:	perl(XML::SAX)
-BuildRequires:	perl(XML::SAX::Expat)
-BuildRequires:	perl(XML::Simple)
+Source0:	http://downloads.sourceforge.net/ocsinventory/OCSNG_UNIX_AGENT-%{version}.tar.gz
 Requires:	net-tools
 Requires:	pciutils
 Requires:	nmap
 Requires:	monitor-edid
+Requires:	dmidecode >= 2.6
+Obsoletes:  ocsng-linux-agent
+Obsoletes:  perl-Ocsinventory
 BuildArch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
-ocsinventory-agent creates inventory and sent or write them. This agent is the
-successor of the former linux_agent which was release with OCS 1.01 and prior.
-It also replaces the Solaris/AIX/BSD unofficial agents.
-
-%package -n	perl-Ocsinventory
-Summary:	Unified client for OCS-Inventory
-Group:		Development/Perl
-
-%description -n	perl-Ocsinventory
-ocsinventory-agent creates inventory and sent or write them. This agent is the
-successor of the former linux_agent which was release with OCS 1.01 and prior.
-It also replaces the Solaris/AIX/BSD unofficial agents.
-
-This package contains the perl module parts of the ocsinventory-agent.
+Linux agent for ocs-inventory. Dialog between client computers and management
+server is based on actual standards, HTTP protocol and XML data formatting.
 
 %prep
-%setup -q -n Ocsinventory-Agent-%{version}
-
-cp %{SOURCE1} ocsinventory-agent.logrotate
-cp %{SOURCE2} ocsinventory-agent.cron
-cp %{SOURCE3} ocsinventory-agent.sysconfig
-cp %{SOURCE4} ocsinventory-agent.cfg
-
-# fix path
-find -type f | xargs perl -pi -e "s|%{_bindir}|%{_sbindir}|g"
+%setup -q -n Ocsinventory-Agent-1.0.1
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
-
 %make
 
 %install
 rm -rf %{buildroot}
-
-install -d %{buildroot}%{_sbindir}
-install -d %{buildroot}%{_sysconfdir}/logrotate.d
-install -d %{buildroot}%{_sysconfdir}/sysconfig
-install -d %{buildroot}%{_sysconfdir}/cron.hourly
-install -d %{buildroot}%{_sysconfdir}/ocsinventory
-install -d %{buildroot}%{_localstatedir}/lib/%{name}
-install -d %{buildroot}/var/log/%{name}
-
 rm -f run-postinst
-
 %makeinstall_std
 
+install -d %{buildroot}%{_sbindir}
 mv %{buildroot}%{_bindir}/* %{buildroot}%{_sbindir}/
 
-install -m0644 ocsinventory-agent.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
-install -m0755 ocsinventory-agent.cron %{buildroot}%{_sysconfdir}/cron.hourly/%{name}
-install -m0644 ocsinventory-agent.sysconfig %{buildroot}%{_sysconfdir}/sysconfig/%{name}
-install -m0644 ocsinventory-agent.cfg %{buildroot}%{_sysconfdir}/ocsinventory/%{name}.cfg
+install -d -m 755 %{buildroot}%{_sysconfdir}/ocsinventory
+cat > %{buildroot}%{_sysconfdir}/ocsinventory/ocsinventory-agent.cfg<<EOF
+basevardir = %{_localstatedir}/lib/ocsinventory-agent
+logger  = File
+logfile = %{_localstatedir}/log/ocsinventory-agent/ocsinventory-agent.log
+EOF
+
+install -d -m 755 %{buildroot}%{_sysconfdir}/cron.daily
+cat > %{buildroot}%{_sysconfdir}/cron.daily/ocsinventory-agent<<EOF
+%{_bindir}/ocsinventory-agent --lazy > /dev/null 2>&1
+EOF
+
+install -d %{buildroot}%{_sysconfdir}/logrotate.d
+cat > %{buildroot}%{_sysconfdir}/logrotate.d/ocsinventory-agent<<EOF
+/var/log/ocsinventory-agent/*.log {
+    missingok
+}
+EOF
+
+install -d %{buildroot}%{_localstatedir}/lib/ocsinventory-agent
+install -d %{buildroot}%{_localstatedir}/log/ocsinventory-agent
 
 # cleanup
 rm -f %{buildroot}%{perl_vendorlib}/Ocsinventory/postinst.pl
@@ -90,16 +66,11 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root, root)
 %doc AUTHORS Changes LICENSE README THANKS
-%{_sysconfdir}/cron.hourly/%{name}
-%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%dir %{_sysconfdir}/ocsinventory
-%config(noreplace) %{_sysconfdir}/ocsinventory/%{name}.cfg
 %{_sbindir}/%{name}
-%dir /var/log/%{name}
-%dir %{_localstatedir}/lib/%{name}
 %{_mandir}/man1/%{name}.*
-
-%files -n perl-Ocsinventory
-%defattr(-,root, root)
 %{perl_vendorlib}/Ocsinventory
+%config(noreplace) %{_sysconfdir}/cron.daily/%{name}
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%config(noreplace) %{_sysconfdir}/ocsinventory
+%{_localstatedir}/log/%{name}
+%{_localstatedir}/lib/%{name}
