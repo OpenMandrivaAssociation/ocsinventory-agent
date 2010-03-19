@@ -1,11 +1,11 @@
 Name:		ocsinventory-agent
-Version:	1.02
-Release:	%mkrel 2
+Version:	1.1.2
+Release:	%mkrel 1
 Summary:	Unified client for OCS-Inventory
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://www.ocsinventory-ng.org/
-Source0:	http://downloads.sourceforge.net/ocsinventory/OCSNG_UNIX_AGENT-%{version}.tar.gz
+Source0:	http://launchpad.net/ocsinventory-unix-agent/stable/ocsinventory-unix-agent-1.1.2/+download/Ocsinventory-Agent-%{version}.tar.gz
 Requires:	net-tools
 Requires:	pciutils
 Requires:	nmap
@@ -21,7 +21,7 @@ Linux agent for ocs-inventory. Dialog between client computers and management
 server is based on actual standards, HTTP protocol and XML data formatting.
 
 %prep
-%setup -q -n Ocsinventory-Agent-1.0.1
+%setup -q -n Ocsinventory-Agent-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
@@ -44,7 +44,7 @@ EOF
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/cron.daily
 cat > %{buildroot}%{_sysconfdir}/cron.daily/ocsinventory-agent<<EOF
-%{_bindir}/ocsinventory-agent --lazy > /dev/null 2>&1
+%{_sbindir}/ocsinventory-agent --lazy > /dev/null 2>&1
 EOF
 chmod +x %{buildroot}%{_sysconfdir}/cron.daily/ocsinventory-agent
 
@@ -69,6 +69,7 @@ rm -rf %{buildroot}
 %doc AUTHORS Changes LICENSE README THANKS
 %{_sbindir}/%{name}
 %{_mandir}/man1/%{name}.*
+%{_mandir}/man3/Ocsinventory::Agent::XML::Inventory.3pm*
 %{perl_vendorlib}/Ocsinventory
 %config(noreplace) %{_sysconfdir}/cron.daily/%{name}
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
