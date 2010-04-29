@@ -1,11 +1,13 @@
 Name:		ocsinventory-agent
 Version:	1.1.2
-Release:	%mkrel 1
+Release:	%mkrel 2
+Epoch:      1
 Summary:	Unified client for OCS-Inventory
 License:	GPLv2+
 Group:		System/Servers
 URL:		http://www.ocsinventory-ng.org/
 Source0:	http://launchpad.net/ocsinventory-unix-agent/stable/ocsinventory-unix-agent-1.1.2/+download/Ocsinventory-Agent-%{version}.tar.gz
+Patch0:     Ocsinventory-Agent-1.1.2-fix-syslog-usage.patch
 Requires:	net-tools
 Requires:	pciutils
 Requires:	nmap
@@ -22,6 +24,7 @@ server is based on actual standards, HTTP protocol and XML data formatting.
 
 %prep
 %setup -q -n Ocsinventory-Agent-%{version}
+%patch0 -p 1
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
