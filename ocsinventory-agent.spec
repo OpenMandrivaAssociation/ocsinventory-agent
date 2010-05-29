@@ -1,6 +1,6 @@
 Name:		ocsinventory-agent
 Version:	1.1.2
-Release:	%mkrel 2
+Release:	%mkrel 3
 Epoch:      1
 Summary:	Unified client for OCS-Inventory
 License:	GPLv2+
@@ -8,11 +8,17 @@ Group:		System/Servers
 URL:		http://www.ocsinventory-ng.org/
 Source0:	http://launchpad.net/ocsinventory-unix-agent/stable/ocsinventory-unix-agent-1.1.2/+download/Ocsinventory-Agent-%{version}.tar.gz
 Patch0:     Ocsinventory-Agent-1.1.2-fix-syslog-usage.patch
+Patch1:     Ocsinventory-Agent-1.1.2-fix-dmidecode-version-test.patch
+Patch2:     Ocsinventory-Agent-1.1.2-fix-xen-dom0-identification.patch
+Patch3:     Ocsinventory-Agent-1.1.2-add-bios-informations-for-xen-pv-hosts.patch
 Requires:	net-tools
 Requires:	pciutils
 Requires:	nmap
 Requires:	monitor-edid
 Requires:	dmidecode >= 2.6
+Suggests:   perl-Net-IP
+Suggests:   perl-Net-CUPS
+Suggests:   ipmitool
 Obsoletes:  ocsng-linux-agent
 Obsoletes:  perl-Ocsinventory
 BuildArch:	noarch
@@ -25,6 +31,9 @@ server is based on actual standards, HTTP protocol and XML data formatting.
 %prep
 %setup -q -n Ocsinventory-Agent-%{version}
 %patch0 -p 1
+%patch1 -p 1
+%patch2 -p 1
+%patch3 -p 1
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
