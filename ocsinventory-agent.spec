@@ -1,6 +1,6 @@
 Name:		ocsinventory-agent
 Version:	1.1.2
-Release:	%mkrel 3
+Release:	%mkrel 4
 Epoch:      1
 Summary:	Unified client for OCS-Inventory
 License:	GPLv2+
@@ -16,8 +16,12 @@ Requires:	pciutils
 Requires:	nmap
 Requires:	monitor-edid
 Requires:	dmidecode >= 2.6
-Suggests:   perl-Net-IP
+Requires:	perl-Net-IP
+Requires:       perl-XML-Simple
+Requires:       perl-Digest-MD5
+Requires:       perl-libwww-perl
 Suggests:   perl-Net-CUPS
+Suggests:   perl-Proc-Daemon
 Suggests:   ipmitool
 Obsoletes:  ocsng-linux-agent
 Obsoletes:  perl-Ocsinventory
