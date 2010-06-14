@@ -17,9 +17,6 @@ Requires:   nmap
 Requires:   monitor-edid
 Requires:   dmidecode >= 2.6
 Requires:   perl-Net-IP
-Requires:   perl-XML-Simple
-Requires:   perl-Digest-MD5
-Requires:   perl-libwww-perl
 Suggests:   perl-Net-CUPS
 Suggests:   perl-Proc-Daemon
 Suggests:   ipmitool
