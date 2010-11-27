@@ -1,6 +1,6 @@
 Name:       ocsinventory-agent
-Version:    1.1.2
-Release:    %mkrel 4
+Version:    1.1.2.1
+Release:    %mkrel 1
 Epoch:      1
 Summary:    Unified client for OCS-Inventory
 License:    GPLv2+
