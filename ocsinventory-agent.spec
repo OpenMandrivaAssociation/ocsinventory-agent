@@ -1,6 +1,6 @@
 Name:       ocsinventory-agent
 Version:    1.1.2.1
-Release:    %mkrel 1
+Release:    %mkrel 2
 Epoch:      1
 Summary:    Unified client for OCS-Inventory
 License:    GPLv2+
@@ -57,6 +57,7 @@ EOF
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/cron.daily
 cat > %{buildroot}%{_sysconfdir}/cron.daily/ocsinventory-agent<<EOF
+#!/bin/sh
 %{_sbindir}/ocsinventory-agent --lazy > /dev/null 2>&1
 EOF
 chmod +x %{buildroot}%{_sysconfdir}/cron.daily/ocsinventory-agent
