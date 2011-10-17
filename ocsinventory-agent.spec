@@ -1,3 +1,5 @@
+%define debug_package %{nil}
+
 Name:       ocsinventory-agent
 Version:    2.0.1
 Release:    %mkrel 1
