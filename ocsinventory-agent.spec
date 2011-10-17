@@ -1,5 +1,3 @@
-%define debug_package %{nil}
-
 Name:       ocsinventory-agent
 Version:    2.0.1
 Release:    %mkrel 1
@@ -24,7 +22,6 @@ Suggests:   perl-Proc-Daemon
 Suggests:   ipmitool
 Obsoletes:  ocsng-linux-agent
 Obsoletes:  perl-Ocsinventory
-BuildArch:  noarch
 BuildRoot:  %{_tmppath}/%{name}-%{version}
 
 %description
@@ -94,4 +91,3 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/ocsinventory
 %{_localstatedir}/log/%{name}
 %{_localstatedir}/lib/%{name}
-#%{_libdir}/debug/usr/sbin/ipdiscover.debug
