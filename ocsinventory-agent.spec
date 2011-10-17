@@ -92,4 +92,4 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/ocsinventory
 %{_localstatedir}/log/%{name}
 %{_localstatedir}/lib/%{name}
-%{_libdir}/debug/usr/sbin/ipdiscover.debug
+#%{_libdir}/debug/usr/sbin/ipdiscover.debug
