@@ -1,5 +1,5 @@
 Name:       ocsinventory-agent
-Version:    2.0.3
+Version:    2.0.4
 Release:    %mkrel 1
 Epoch:      1
 Summary:    Unified client for OCS-Inventory
