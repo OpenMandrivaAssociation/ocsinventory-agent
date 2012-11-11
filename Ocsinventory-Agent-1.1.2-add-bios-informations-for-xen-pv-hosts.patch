@@ -1,0 +1,16 @@
+diff -Naur -x '*~' Ocsinventory-Agent-1.1.2-fix-xen-dom0-identification/lib/Ocsinventory/Agent/Backend/Virtualization/Vmsystem.pm Ocsinventory-Agent-1.1.2-add-bios-informations-for-xen-pv-hosts//lib/Ocsinventory/Agent/Backend/Virtualization/Vmsystem.pm
+--- Ocsinventory-Agent-1.1.2-fix-xen-dom0-identification/lib/Ocsinventory/Agent/Backend/Virtualization/Vmsystem.pm	2010-05-27 14:26:13.253368333 +0200
++++ Ocsinventory-Agent-1.1.2-add-bios-informations-for-xen-pv-hosts//lib/Ocsinventory/Agent/Backend/Virtualization/Vmsystem.pm	2010-05-27 14:37:34.641105626 +0200
+@@ -90,6 +90,12 @@
+         } else {
+           # domU PV host
+           $status = "Xen";
++
++          # those information can't be extracted from dmidecode
++          $inventory->setBios ({
++            SMANUFACTURER => 'Xen',
++            SMODEL => 'PVM domU'
++          });
+         }
+     }
+ 

@@ -1,0 +1,41 @@
+diff -Naur -x '*~' Ocsinventory-Agent-1.1.2/lib/Ocsinventory/Agent/Config.pm Ocsinventory-Agent-1.1.2-fix-syslog-usage//lib/Ocsinventory/Agent/Config.pm
+--- Ocsinventory-Agent-1.1.2/lib/Ocsinventory/Agent/Config.pm	2010-01-03 16:04:59.000000000 +0100
++++ Ocsinventory-Agent-1.1.2-fix-syslog-usage//lib/Ocsinventory/Agent/Config.pm	2010-04-29 10:12:35.000000000 +0200
+@@ -16,6 +16,7 @@
+   'local'     =>  '',
+   #'logger'    =>  'Syslog,File,Stderr',
+   'logger'    =>  'Stderr',
++  'logfacility' =>  'LOG_USER',
+   'logfile'   =>  '',
+   'password'  =>  '',
+   'proxy'     =>  '',
+diff -Naur -x '*~' Ocsinventory-Agent-1.1.2/lib/Ocsinventory/LoggerBackend/Syslog.pm Ocsinventory-Agent-1.1.2-fix-syslog-usage//lib/Ocsinventory/LoggerBackend/Syslog.pm
+--- Ocsinventory-Agent-1.1.2/lib/Ocsinventory/LoggerBackend/Syslog.pm	2010-01-03 16:04:59.000000000 +0100
++++ Ocsinventory-Agent-1.1.2-fix-syslog-usage//lib/Ocsinventory/LoggerBackend/Syslog.pm	2010-04-29 11:58:59.000000000 +0200
+@@ -7,10 +7,8 @@
+ 
+   my $self = {};
+ 
+-  setlogsock('unix');
+-  openlog("ocs-agent", 'cons,pid', $ENV{'USER'});
++  openlog("ocs-agent", 'cons,pid', $params->{config}->{logfacility});
+   syslog('debug', 'syslog backend enabled');
+-  closelog();
+ 
+   bless $self;
+ }
+@@ -24,10 +22,12 @@
+ 
+   return if $message =~ /^$/;
+ 
+-  openlog("ocs-agent", 'cons,pid', $ENV{'USER'});
+   syslog('info', $message);
+-  closelog();
+ 
+ }
+ 
++sub DESTROY {
++  closelog();
++}
++
+ 1;
