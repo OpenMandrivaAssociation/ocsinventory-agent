@@ -1,6 +1,6 @@
 Name:       ocsinventory-agent
-Version:    2.0.5
-Release:    %mkrel 1
+Version:    2.0.3
+Release:    2
 Epoch:      1
 Summary:    Unified client for OCS-Inventory
 License:    GPLv2+
@@ -17,12 +17,12 @@ Requires:   nmap
 Requires:   monitor-edid
 Requires:   dmidecode >= 2.6
 Requires:   perl-Net-IP
+BuildRequires:   perl-devel
 Suggests:   perl-Net-CUPS
 Suggests:   perl-Proc-Daemon
 Suggests:   ipmitool
 Obsoletes:  ocsng-linux-agent
 Obsoletes:  perl-Ocsinventory
-BuildRoot:  %{_tmppath}/%{name}-%{version}
 
 %description
 Linux agent for ocs-inventory. Dialog between client computers and management
@@ -40,7 +40,6 @@ server is based on actual standards, HTTP protocol and XML data formatting.
 %make
 
 %install
-rm -rf %{buildroot}
 rm -f run-postinst
 %makeinstall_std
 
@@ -74,9 +73,6 @@ install -d %{buildroot}%{_localstatedir}/log/ocsinventory-agent
 # cleanup
 rm -f %{buildroot}%{perl_vendorlib}/Ocsinventory/postinst.pl
 
-%clean
-rm -rf %{buildroot}
-
 %files
 %defattr(-,root, root)
 %doc AUTHORS Changes LICENSE README THANKS
@@ -91,3 +87,82 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/ocsinventory
 %{_localstatedir}/log/%{name}
 %{_localstatedir}/lib/%{name}
+
+
+%changelog
+* Wed Nov 30 2011 Sergey Zhemoitel <serg@mandriva.org> 1:2.0.3-1mdv2012.0
++ Revision: 735763
+- add new release 2.0.3
+
+* Wed Nov 16 2011 Sergey Zhemoitel <serg@mandriva.org> 1:2.0.2-1
++ Revision: 730816
+- new release 2.0.2
+
+* Mon Oct 17 2011 Andrey Bondrov <abondrov@mandriva.org> 1:2.0.1-1
++ Revision: 704969
+- Not a noarch package anymore
+
+  + Sergey Zhemoitel <serg@mandriva.org>
+    - new version 2.0.1
+
+* Fri Feb 04 2011 Guillaume Rousse <guillomovitch@mandriva.org> 1:1.1.2.1-2
++ Revision: 635830
+- fix cron task (bug #61969)
+
+* Sat Nov 27 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1:1.1.2.1-1mdv2011.0
++ Revision: 601954
+- new version
+
+* Mon Jun 14 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1:1.1.2-4mdv2011.0
++ Revision: 548020
+- drop useless explicit dependencies
+- cleanup space and tabs mixture
+
+* Mon Jun 14 2010 Anne Nicolas <ennael@mandriva.org> 1:1.1.2-4mdv2010.1
++ Revision: 547999
+- Fix requires and suggests (#59459)
+
+* Sat May 29 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1:1.1.2-3mdv2010.1
++ Revision: 546575
+- patch1: fix dmidecode version test
+- patch2: fix xen dom0 identification
+- patch3: add bios information for xen PV hosts
+- suggests optional perl modules and tools (fix #59459)
+
+* Thu Apr 29 2010 Guillaume Rousse <guillomovitch@mandriva.org> 1:1.1.2-2mdv2010.1
++ Revision: 540800
+- patch0: fix syslog usage
+- new version
+- fix cron task
+
+* Mon Nov 30 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.02-2mdv2010.1
++ Revision: 471940
+- ensure cron script is executable
+
+* Sat Jun 06 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.02-1mdv2010.0
++ Revision: 383255
+- new version
+- merge perl package, no need for a distinct one
+- use herein document whenever possible
+- switch to a daily cron job, as per default installation
+
+* Sun May 10 2009 Guillaume Rousse <guillomovitch@mandriva.org> 1.0.1-1mdv2010.0
++ Revision: 373950
+- new version
+- drop patches, not needed anymore
+
+* Fri Aug 08 2008 Thierry Vignaud <tv@mandriva.org> 0.0.9.2-2mdv2009.0
++ Revision: 268323
+- rebuild early 2009.0 package (before pixel changes)
+
+  + Pixel <pixel@mandriva.com>
+    - adapt to %%_localstatedir now being /var instead of /var/lib (#22312)
+
+* Thu May 15 2008 Oden Eriksson <oeriksson@mandriva.com> 0.0.9.2-1mdv2009.0
++ Revision: 207628
+- remove versioned deps
+
+* Wed May 14 2008 Oden Eriksson <oeriksson@mandriva.com> 0.0.9.2-0.1mdv2009.0
++ Revision: 207254
+- import ocsinventory-agent
+
