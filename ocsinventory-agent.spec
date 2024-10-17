@@ -5,7 +5,7 @@ Epoch:      1
 Summary:    Unified client for OCS-Inventory
 License:    GPLv2+
 Group:      System/Servers
-URL:        http://www.ocsinventory-ng.org/
+URL:        https://www.ocsinventory-ng.org/
 Source0:    http://launchpad.net/ocsinventory-unix-agent/stable/ocsinventory-unix-agent-1.1.2/+download/Ocsinventory-Unix-Agent-%{version}.tar.gz
 Patch0:     Ocsinventory-Agent-1.1.2-fix-syslog-usage.patch
 Patch1:     Ocsinventory-Agent-1.1.2-fix-dmidecode-version-test.patch
